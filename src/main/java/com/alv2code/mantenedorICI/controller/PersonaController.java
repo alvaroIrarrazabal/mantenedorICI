@@ -1,12 +1,16 @@
 package com.alv2code.mantenedorICI.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.alv2code.mantenedorICI.model.Persona;
 import com.alv2code.mantenedorICI.response.PersonaResponseRest;
 import com.alv2code.mantenedorICI.services.IPersonaService;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/api/v1")
 public class PersonaController {
@@ -70,7 +74,7 @@ public class PersonaController {
 			@RequestParam("apellidoMaterno") String apellidoMaterno,
 			@RequestParam("email") String email,
 			@RequestParam("telefono") String telefono,
-//			@RequestParam("cumple") Date cumple,
+		@RequestParam("cumple") Date cumple,  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime dateTime,
 			@RequestParam("pais") Long idPais,
 			@RequestParam("region") Long idRegion,
 			@RequestParam("comuna") Long idComuna,
@@ -94,7 +98,7 @@ public class PersonaController {
 		persona.setApellidoMaterno(apellidoMaterno);
 		persona.setEmail(email);
 		persona.setTelefono(telefono);
-//		persona.setCumple(cumple);
+		persona.setCumple(cumple);
 		persona.setSupervisorId(supervisorId);
 		persona.setGenero(genero);
 		persona.setEstadoCivil(estadoCivil);
@@ -141,7 +145,7 @@ public class PersonaController {
 			@RequestParam("apellidoMaterno") String apellidoMaterno,
 			@RequestParam("email") String email,
 			@RequestParam("telefono") String telefono,
-//			@RequestParam("cumple") Date cumple,
+			@RequestParam("cumple") Date cumple,
 			@RequestParam("pais") Long idPais,
 			@RequestParam("region") Long idRegion,
 			@RequestParam("comuna") Long idComuna,
@@ -166,7 +170,7 @@ public class PersonaController {
 		persona.setApellidoMaterno(apellidoMaterno);
 		persona.setEmail(email);
 		persona.setTelefono(telefono);
-//		persona.setCumple(cumple);
+		persona.setCumple(cumple);
 		persona.setSupervisorId(supervisorId);
 		persona.setGenero(genero);
 		persona.setEstadoCivil(estadoCivil);
