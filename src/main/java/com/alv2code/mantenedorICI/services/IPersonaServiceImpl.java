@@ -27,6 +27,8 @@ public class IPersonaServiceImpl implements IPersonaService{
 	
 	@Autowired
 	private IPersonaDao personaDao;
+	
+
 	@Autowired
 	private IpaisDao paisDao;
 	@Autowired
@@ -246,6 +248,101 @@ public class IPersonaServiceImpl implements IPersonaService{
 
 			}
 			return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.OK);
+	}
+
+	
+	@Override
+	@Transactional(readOnly = true)
+	public ResponseEntity<PersonaResponseRest> buscarEstadoCivil() {
+		PersonaResponseRest response = new PersonaResponseRest();
+		
+		try {
+			List<Persona> persona = (List<Persona>) personaDao.buscarEstadoCivil(); 
+			if(persona.size() > 0) {
+				response.getPersonaResponse().setPersona(persona);
+				response.setMetadata("Respuesta OK", "00", "Consulta exitosa");
+				
+			}else {
+				response.setMetadata("Respuesta NOK", "-1", "No se encontró data");
+				return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.NOT_FOUND);
+			}
+			
+		} catch (Exception e) {
+			response.setMetadata("Respuesta NOK", "-1", "Error al buscar la persona");
+			return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+		return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.OK);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public ResponseEntity<PersonaResponseRest> buscarSupervisor() {
+	PersonaResponseRest response = new PersonaResponseRest();
+		
+		try {
+			List<Persona> persona = (List<Persona>) personaDao.buscarSupervisor();
+			if(persona.size() > 0) {
+				response.getPersonaResponse().setPersona(persona);
+				response.setMetadata("Respuesta OK", "00", "Consulta exitosa");
+				
+			}else {
+				response.setMetadata("Respuesta NOK", "-1", "No se encontró data");
+				return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.NOT_FOUND);
+			}
+			
+		} catch (Exception e) {
+			response.setMetadata("Respuesta NOK", "-1", "Error al buscar al supervisor");
+			return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+		return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<PersonaResponseRest> buscarPadres() {
+PersonaResponseRest response = new PersonaResponseRest();
+		
+		try {
+			List<Persona> persona = (List<Persona>) personaDao.buscarPadres();
+			if(persona.size() > 0) {
+				response.getPersonaResponse().setPersona(persona);
+				response.setMetadata("Respuesta OK", "00", "Consulta exitosa");
+				
+			}else {
+				response.setMetadata("Respuesta NOK", "-1", "No se encontró data");
+				return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.NOT_FOUND);
+			}
+			
+		} catch (Exception e) {
+			response.setMetadata("Respuesta NOK", "-1", "Error al buscar la data");
+			return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+		return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<PersonaResponseRest> buscarMadres() {
+PersonaResponseRest response = new PersonaResponseRest();
+		
+		try {
+			List<Persona> persona = (List<Persona>) personaDao.buscarMadres();
+			if(persona.size() > 0) {
+				response.getPersonaResponse().setPersona(persona);
+				response.setMetadata("Respuesta OK", "00", "Consulta exitosa");
+				
+			}else {
+				response.setMetadata("Respuesta NOK", "-1", "No se encontró data");
+				return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.NOT_FOUND);
+			}
+			
+		} catch (Exception e) {
+			response.setMetadata("Respuesta NOK", "-1", "Error al buscar la data");
+			return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+		return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.OK);
 	}
 
 }

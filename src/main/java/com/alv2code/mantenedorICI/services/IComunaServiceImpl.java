@@ -6,7 +6,9 @@ import java.util.Optional;
 
 import com.alv2code.mantenedorICI.dao.IComunaDao;
 import com.alv2code.mantenedorICI.model.Comuna;
+import com.alv2code.mantenedorICI.model.Region;
 import com.alv2code.mantenedorICI.response.ComunaResponseRest;
+import com.alv2code.mantenedorICI.response.RegionResponseRest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -156,6 +158,31 @@ public class IComunaServiceImpl implements IComunaService {
 			response.setMetadata("Respuesta NOK", "00","Error al consultar");
 			return new ResponseEntity<ComunaResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		return new ResponseEntity<ComunaResponseRest>(response, HttpStatus.OK);
+	}
+
+
+	@Override
+	public ResponseEntity<ComunaResponseRest> buscarPorRegion(Long id) {
+
+		ComunaResponseRest response = new ComunaResponseRest();
+
+		try {
+			List<Comuna> comuna = comunaDao.findByRegion(id);
+
+			if (comuna != null) {
+				response.getComunaResponse().setComuna(comuna);
+				response.setMetadata("Respuesta OK", "00", "Respuesta exitosa");
+			} else {
+				response.setMetadata("Respuesta NOK", "-1", "Comuna no encontrada");
+				return new ResponseEntity<ComunaResponseRest>(response, HttpStatus.NOT_FOUND);
+			}
+
+		} catch (Exception e) {
+			response.setMetadata("Respuesta NOK", "-1", "Error en la consulta");
+			return new ResponseEntity<ComunaResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 		return new ResponseEntity<ComunaResponseRest>(response, HttpStatus.OK);
 	}
 

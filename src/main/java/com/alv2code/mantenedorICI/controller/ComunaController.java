@@ -2,6 +2,7 @@ package com.alv2code.mantenedorICI.controller;
 
 import com.alv2code.mantenedorICI.model.Comuna;
 import com.alv2code.mantenedorICI.response.ComunaResponseRest;
+import com.alv2code.mantenedorICI.response.RegionResponseRest;
 import com.alv2code.mantenedorICI.services.IComunaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,13 @@ public class ComunaController {
 	public ResponseEntity<ComunaResponseRest> borrarComunas( @PathVariable Long id){
 		
 		ResponseEntity<ComunaResponseRest> response = service.borrar(id);
+		return response;
+	}
+	
+	
+	@GetMapping("/comunas/region/{id}")
+	public ResponseEntity<ComunaResponseRest> buscarRegionPorPais(@PathVariable Long id){
+		ResponseEntity<ComunaResponseRest> response = service.buscarPorRegion(id);
 		return response;
 	}
 	

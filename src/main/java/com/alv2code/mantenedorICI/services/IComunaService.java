@@ -13,4 +13,5 @@ public interface IComunaService {
 	public ResponseEntity<ComunaResponseRest> guardar(Comuna comuna);
 	public ResponseEntity<ComunaResponseRest> actualizar(Comuna comuna, Long id);
 	public ResponseEntity<ComunaResponseRest> borrar(Long id);
+	public ResponseEntity<ComunaResponseRest> buscarPorRegion(Long id);
 }

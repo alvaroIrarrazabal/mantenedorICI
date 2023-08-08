@@ -154,4 +154,28 @@ public class IRegionServiceImpl implements IRegionService {
 		return new ResponseEntity<RegionResponseRest>(response, HttpStatus.OK);
 	}
 
+	@Override
+	public ResponseEntity<RegionResponseRest> buscarRegionPorPais(Long id) {
+
+		RegionResponseRest response = new RegionResponseRest();
+
+		try {
+			List<Region> region = regionDao.findByPais(id);
+
+			if (region != null) {
+				response.getRegionResponse().setRegion(region);
+				response.setMetadata("Respuesta OK", "00", "Respuesta exitosa");
+			} else {
+				response.setMetadata("Respuesta NOK", "-1", "Region no encontrada");
+				return new ResponseEntity<RegionResponseRest>(response, HttpStatus.NOT_FOUND);
+			}
+
+		} catch (Exception e) {
+			response.setMetadata("Respuesta NOK", "-1", "Error en la consulta");
+			return new ResponseEntity<RegionResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return new ResponseEntity<RegionResponseRest>(response, HttpStatus.OK);
+	}
+
 }

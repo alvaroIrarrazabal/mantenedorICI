@@ -38,6 +38,29 @@ public class PersonaController {
 		return response;
 	}
 	
+	
+	@GetMapping("/personas/estadoCivil")
+	public ResponseEntity<PersonaResponseRest> buscarPersonasPorEstadoCivil(){
+		ResponseEntity<PersonaResponseRest> response = servicio.buscarEstadoCivil();
+		return response;
+	}
+	
+	@GetMapping("/personas/supervisores")
+	public ResponseEntity<PersonaResponseRest> buscarSupervisor(){
+		ResponseEntity<PersonaResponseRest> response = servicio.buscarSupervisor();
+		return response;
+	}
+	@GetMapping("/personas/madres")
+	public ResponseEntity<PersonaResponseRest> buscarMadres(){
+		ResponseEntity<PersonaResponseRest> response = servicio.buscarMadres();
+		return response;
+	}
+	@GetMapping("/personas/padres")
+	public ResponseEntity<PersonaResponseRest> buscarPadres(){
+		ResponseEntity<PersonaResponseRest> response = servicio.buscarPadres();
+		return response;
+	}
+	
 	@GetMapping("/personas/{id}")
 	public ResponseEntity<PersonaResponseRest> buscarPersonaPorId(@PathVariable Long id){
 		ResponseEntity<PersonaResponseRest> response = servicio.buscarPersonaPorId(id);

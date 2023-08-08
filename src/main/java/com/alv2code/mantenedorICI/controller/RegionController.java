@@ -47,6 +47,12 @@ public class RegionController {
 		return response;
 	}
 	
+	@GetMapping("/regiones/pais/{id}")
+	public ResponseEntity<RegionResponseRest> buscarRegionPorPais(@PathVariable Long id){
+		ResponseEntity<RegionResponseRest> response = service.buscarRegionPorPais(id);
+		return response;
+	}
+	
 	/*
 	 * buscar regiones por id
 	 */

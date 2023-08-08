@@ -13,4 +13,5 @@ public interface IRegionService {
 	public ResponseEntity<RegionResponseRest> guardar(Region region);
 	public ResponseEntity<RegionResponseRest> actualizar(Region region,Long id);
 	public ResponseEntity<RegionResponseRest> eliminar(Long id);
+	public ResponseEntity<RegionResponseRest> buscarRegionPorPais(Long id);
 }
