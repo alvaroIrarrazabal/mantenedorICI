@@ -1,13 +1,19 @@
 package com.alv2code.mantenedorICI.response;
 
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
+
 public class RolResponseRest extends ResponseRest{
 
 	
 	private RolResponse rolResponse = new RolResponse();
+
+	public RolResponse getRolResponse() {
+		return rolResponse;
+	}
+
+	public void setRolResponse(RolResponse rolResponse) {
+		this.rolResponse = rolResponse;
+	}
+	
 
 }

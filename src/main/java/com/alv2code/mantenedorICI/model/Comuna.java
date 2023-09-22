@@ -17,7 +17,6 @@ import lombok.Data;
 
 @Entity
 @Table(name="comuna")
-@Data
 public class Comuna implements Serializable {
 
 	/**
@@ -31,10 +30,58 @@ public class Comuna implements Serializable {
 	private Long id;
 	private String nombre;
 	
-	@JoinColumn(name = "fk_region", nullable = false)
-    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Region region;
 	
+	
+	
+	public Long getId() {
+		return id;
+	}
+
+
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+
+
+	public String getNombre() {
+		return nombre;
+	}
+
+
+
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+
+
+
+	public Region getRegion() {
+		return region;
+	}
+
+
+
+
+	public void setRegion(Region region) {
+		this.region = region;
+	}
+
+
+
+
+
+
+
+
+
+	 @ManyToOne(fetch = FetchType.EAGER)
+	    private Region region;
 	
 
 }

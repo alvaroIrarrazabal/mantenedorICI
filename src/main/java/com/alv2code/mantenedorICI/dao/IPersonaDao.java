@@ -13,18 +13,22 @@ public interface IPersonaDao extends CrudRepository<Persona, Long> {
 	@Query(value ="select * from ici.persona  where estado_civil ='casado'",nativeQuery = true)
 	public List<Persona> buscarEstadoCivil();
 	
-	@Query(value="select * from Persona p inner join persona_roles r on(p.id = r.persona_id) "
+	@Query(value="select * from ici.persona p inner join persona_roles r on(p.id = r.persona_id) "
 			+ "where r.roles_id=2", nativeQuery = true) 
 	public List<Persona> buscarSupervisor();
 	
 	
-	@Query(value="select * from Persona p inner join persona_roles r on(p.id = r.persona_id) "
-			+ "where r.roles_id=9", nativeQuery = true) 
+	@Query(value="select * from ici.persona p inner join ici.persona_roles r on(p.id = r.persona_id) "
+			+ "where r.roles_id=4", nativeQuery = true) 
 	public List<Persona> buscarPadres();
 	
-	@Query(value="select * from Persona p inner join persona_roles r on(p.id = r.persona_id) "
-			+ "where r.roles_id=8", nativeQuery = true) 
+	@Query(value="select * from ici.persona p inner join ici.persona_roles r on(p.id = r.persona_id) "
+			+ "where r.roles_id=3", nativeQuery = true) 
 	public List<Persona> buscarMadres();
+	
+	@Query(value="select * from ici.persona p where estado_civil = 'casado'"
+			, nativeQuery = true) 
+	public List<Persona> buscarConyuge();
 	
 	
 	

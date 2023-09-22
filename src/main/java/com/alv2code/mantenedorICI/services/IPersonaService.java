@@ -17,6 +17,7 @@ public interface IPersonaService {
 	public ResponseEntity<PersonaResponseRest> buscarEstadoCivil();
 	public ResponseEntity<PersonaResponseRest> buscarPadres();
 	public ResponseEntity<PersonaResponseRest> buscarMadres();
+	public ResponseEntity<PersonaResponseRest> buscarConyuge();
 	
 //	public ResponseEntity<PersonaResponseRest> buscarPersonasRol();
 }

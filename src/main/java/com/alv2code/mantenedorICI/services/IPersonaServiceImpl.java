@@ -345,4 +345,27 @@ PersonaResponseRest response = new PersonaResponseRest();
 		return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.OK);
 	}
 
+	@Override
+	public ResponseEntity<PersonaResponseRest> buscarConyuge() {
+		PersonaResponseRest response = new PersonaResponseRest();
+		
+		try {
+			List<Persona> persona = (List<Persona>) personaDao.buscarConyuge();
+			if(persona.size() > 0) {
+				response.getPersonaResponse().setPersona(persona);
+				response.setMetadata("Respuesta OK", "00", "Consulta exitosa");
+				
+			}else {
+				response.setMetadata("Respuesta NOK", "-1", "No se encontró data");
+				return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.NOT_FOUND);
+			}
+			
+		} catch (Exception e) {
+			response.setMetadata("Respuesta NOK", "-1", "Error al buscar la data");
+			return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+		return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.OK);
+	}
+
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.alv2code.mantenedorICI.dao.IComunaDao;
 import com.alv2code.mantenedorICI.model.Comuna;
+import com.alv2code.mantenedorICI.model.Pais;
 import com.alv2code.mantenedorICI.model.Region;
 import com.alv2code.mantenedorICI.response.ComunaResponseRest;
 import com.alv2code.mantenedorICI.response.RegionResponseRest;
@@ -25,6 +26,9 @@ public class IComunaServiceImpl implements IComunaService {
 	private IComunaDao comunaDao;
 	
 	
+	Comuna comuna = new Comuna();
+	
+	
 	@Override
 	@Transactional(readOnly = true)
 	public ResponseEntity<ComunaResponseRest> buscar() {
@@ -33,7 +37,7 @@ public class IComunaServiceImpl implements IComunaService {
 		try {
 			
 			List<Comuna> comuna = (List<Comuna>) comunaDao.findAll();	
-			response.getComunaResponse().setComuna(comuna);
+			response.getComunaResponse().setComuna(comuna);	
 			response.setMetadata("Respuesta OK", "00","Respuesta exitosa");
 			
 		} catch (Exception e) {
@@ -171,7 +175,7 @@ public class IComunaServiceImpl implements IComunaService {
 			List<Comuna> comuna = comunaDao.findByRegion(id);
 
 			if (comuna != null) {
-				response.getComunaResponse().setComuna(comuna);
+				 response.getComunaResponse().setComuna(comuna);
 				response.setMetadata("Respuesta OK", "00", "Respuesta exitosa");
 			} else {
 				response.setMetadata("Respuesta NOK", "-1", "Comuna no encontrada");

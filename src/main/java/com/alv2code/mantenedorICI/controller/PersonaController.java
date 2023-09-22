@@ -67,6 +67,13 @@ public class PersonaController {
 		return response;
 	}
 	
+	
+	@GetMapping("/personas/conyuge")
+	public ResponseEntity<PersonaResponseRest> buscarConyuge(){
+		ResponseEntity<PersonaResponseRest> response = servicio.buscarConyuge();
+		return response;
+	}
+	
 	/**
 	 * Guardar persona
 	 * @param nombre
