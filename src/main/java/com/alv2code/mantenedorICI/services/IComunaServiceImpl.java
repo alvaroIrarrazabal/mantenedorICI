@@ -3,14 +3,9 @@ package com.alv2code.mantenedorICI.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import com.alv2code.mantenedorICI.dao.IComunaDao;
 import com.alv2code.mantenedorICI.model.Comuna;
-import com.alv2code.mantenedorICI.model.Pais;
-import com.alv2code.mantenedorICI.model.Region;
 import com.alv2code.mantenedorICI.response.ComunaResponseRest;
-import com.alv2code.mantenedorICI.response.RegionResponseRest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,16 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class IComunaServiceImpl implements IComunaService {
-
-	
 	
 	@Autowired
 	private IComunaDao comunaDao;
-	
-	
-	Comuna comuna = new Comuna();
-	
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public ResponseEntity<ComunaResponseRest> buscar() {
@@ -106,6 +95,7 @@ public class IComunaServiceImpl implements IComunaService {
 
 
 	@Override
+	@Transactional
 	public ResponseEntity<ComunaResponseRest> actualizar(Comuna comuna, Long id) {
 		ComunaResponseRest response = new ComunaResponseRest();
 		List<Comuna> lista = new ArrayList<>();
@@ -141,6 +131,7 @@ public class IComunaServiceImpl implements IComunaService {
 
 
 	@Override
+	@Transactional
 	public ResponseEntity<ComunaResponseRest> borrar(Long id) {
 		ComunaResponseRest response = new ComunaResponseRest();
 
@@ -167,7 +158,7 @@ public class IComunaServiceImpl implements IComunaService {
 
 
 	@Override
-	public ResponseEntity<ComunaResponseRest> buscarPorRegion(Long id) {
+	public ResponseEntity<ComunaResponseRest> buscarComunaPorRegion(Long id) {
 
 		ComunaResponseRest response = new ComunaResponseRest();
 

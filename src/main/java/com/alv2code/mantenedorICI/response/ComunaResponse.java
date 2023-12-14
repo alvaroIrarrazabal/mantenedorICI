@@ -4,9 +4,6 @@ import java.util.List;
 
 import com.alv2code.mantenedorICI.model.Comuna;
 
-import lombok.Data;
-
-
 public class ComunaResponse {
 
 	

@@ -1,8 +1,5 @@
 package com.alv2code.mantenedorICI.response;
 
-
-
-
 public class ComunaResponseRest extends ResponseRest {
 	
 	private ComunaResponse comunaResponse = new ComunaResponse();

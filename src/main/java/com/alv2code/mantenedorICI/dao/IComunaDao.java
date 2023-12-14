@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface IComunaDao  extends CrudRepository<Comuna,Long> {
 	
-	@Query("SELECT c FROM Comuna c WHERE c.region.id = ?1 ")
+	@Query(value="SELECT * FROM ici.comuna  WHERE region_id = ?1",nativeQuery = true)
 	public List<Comuna> findByRegion(Long id);
 
 }

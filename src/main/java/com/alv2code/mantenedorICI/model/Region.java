@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -26,10 +26,16 @@ public class Region implements Serializable {/**
 
 
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String nombre;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nombre;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "pais_id")
+    private Pais pais;
+
 	
 	
 	
@@ -55,6 +61,9 @@ public class Region implements Serializable {/**
 		this.nombre = nombre;
 	}
 
+	
+
+
 
 
 	public Pais getPais() {
@@ -69,8 +78,6 @@ public class Region implements Serializable {/**
 
 
 
-	@ManyToOne(fetch = FetchType.EAGER)
-    private Pais pais;
 	
 
 	

@@ -9,6 +9,7 @@ import com.alv2code.mantenedorICI.response.PersonaResponseRest;
 import com.alv2code.mantenedorICI.services.IPersonaService;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -98,19 +99,22 @@ public class PersonaController {
 	 */
 	
 	@PostMapping("/personas")
-	public ResponseEntity<PersonaResponseRest> buscarPersonaPorId(
+	public ResponseEntity<PersonaResponseRest> guardarPersona(
 			@RequestParam("nombre") String nombre,
 			@RequestParam("apellidoPaterno") String apellidoPaterno,
 			@RequestParam("apellidoMaterno") String apellidoMaterno,
 			@RequestParam("email") String email,
 			@RequestParam("telefono") String telefono,
-		@RequestParam("cumple") Date cumple,  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime dateTime,
+			@RequestParam("cumple") Date cumple,  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime dateTime,
 			@RequestParam("pais") Long idPais,
 			@RequestParam("region") Long idRegion,
 			@RequestParam("comuna") Long idComuna,
 			@RequestParam("supervisorId") int supervisorId,
-			@RequestParam("genero") String genero,
-			@RequestParam("estadoCivil") String estadoCivil,
+			@RequestParam("nombreSupervisor")String nombreSupervisor,
+			@RequestParam("apellidoPaternoSupervisor")String apellidoPaternoSupervisor,
+			//@RequestParam("apellidoMaternoSupervisor")String apellidoMaternoSupervisor,
+			@RequestParam("genero") int genero,
+			@RequestParam("estadoCivil") Long idEstadoCivil,
 			@RequestParam("redSocial") String redSocial,
 			@RequestParam("conyugeId") int conyugeId,
 			@RequestParam("padreId") int padreId,
@@ -130,8 +134,10 @@ public class PersonaController {
 		persona.setTelefono(telefono);
 		persona.setCumple(cumple);
 		persona.setSupervisorId(supervisorId);
+		persona.setNombreSupervisor(nombreSupervisor);
+		persona.setApellidoPaternoSupervisor(apellidoPaternoSupervisor);
+		//persona.setApellidoMaternoSupervisor(apellidoMaternoSupervisor);
 		persona.setGenero(genero);
-		persona.setEstadoCivil(estadoCivil);
 		persona.setRedSocial(redSocial);
 		persona.setConyugeId(conyugeId);
 		persona.setPadreId(padreId);
@@ -140,7 +146,7 @@ public class PersonaController {
 	
 		
 		
-		ResponseEntity<PersonaResponseRest> response = servicio.guardarPersona(persona, idPais, idRegion, idComuna,idRol);
+		ResponseEntity<PersonaResponseRest> response = servicio.guardarPersona(persona, idPais, idRegion, idComuna,idRol,idEstadoCivil);
 		return response;
 	}
 	
@@ -180,8 +186,8 @@ public class PersonaController {
 			@RequestParam("region") Long idRegion,
 			@RequestParam("comuna") Long idComuna,
 			@RequestParam("supervisorId") int supervisorId,
-			@RequestParam("genero") String genero,
-			@RequestParam("estadoCivil") String estadoCivil,
+			@RequestParam("genero") int genero,
+			@RequestParam("estadoCivil") Long idEstadoCivil,
 			@RequestParam("redSocial") String redSocial,
 			@RequestParam("conyugeId") int conyugeId,
 			@RequestParam("padreId") int padreId,
@@ -203,7 +209,6 @@ public class PersonaController {
 		persona.setCumple(cumple);
 		persona.setSupervisorId(supervisorId);
 		persona.setGenero(genero);
-		persona.setEstadoCivil(estadoCivil);
 		persona.setRedSocial(redSocial);
 		persona.setConyugeId(conyugeId);
 		persona.setPadreId(padreId);
@@ -212,7 +217,7 @@ public class PersonaController {
 	
 		
 		
-		ResponseEntity<PersonaResponseRest> response = servicio.actualizarPersona(persona, idRol, id);
+		ResponseEntity<PersonaResponseRest> response = servicio.actualizarPersona(persona,id, idPais, idRegion, idComuna,idRol,idEstadoCivil);
 		return response;
 	}
 	
@@ -227,6 +232,8 @@ public class PersonaController {
 		ResponseEntity<PersonaResponseRest> response = servicio.borrarPorId(id);
 		return response;
 	}
+	
+	
 	
 	
 	

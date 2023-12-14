@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.PersistenceContext;
+
 import com.alv2code.mantenedorICI.dao.IComunaDao;
+import com.alv2code.mantenedorICI.dao.IEstadoCivilDao;
 import com.alv2code.mantenedorICI.dao.IPersonaDao;
 import com.alv2code.mantenedorICI.dao.IRegionDao;
 import com.alv2code.mantenedorICI.dao.IRolDao;
 import com.alv2code.mantenedorICI.dao.IpaisDao;
 import com.alv2code.mantenedorICI.model.Comuna;
+import com.alv2code.mantenedorICI.model.EstadoCivil;
 import com.alv2code.mantenedorICI.model.Pais;
 import com.alv2code.mantenedorICI.model.Persona;
 import com.alv2code.mantenedorICI.model.Region;
@@ -25,8 +29,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class IPersonaServiceImpl implements IPersonaService{
 	
-	@Autowired
-	private IPersonaDao personaDao;
+	
+
+	  
+
+	    @Autowired
+	    private IPersonaDao personaDao;
 	
 
 	@Autowired
@@ -37,6 +45,8 @@ public class IPersonaServiceImpl implements IPersonaService{
 	private IComunaDao comunaDao;
 	@Autowired
 	private IRolDao rolDao;
+	@Autowired
+	private IEstadoCivilDao estadoDao;
 	
 
 	@Override
@@ -92,7 +102,7 @@ public class IPersonaServiceImpl implements IPersonaService{
 
 	
 	
-	public ResponseEntity<PersonaResponseRest> guardarPersona(Persona persona,Long paisId, Long regionId, Long comunaId,Long rolId) {
+	public ResponseEntity<PersonaResponseRest> guardarPersona(Persona persona,Long paisId, Long regionId, Long comunaId,Long rolId,Long estadoCivilId) {
 		PersonaResponseRest response = new PersonaResponseRest();
 		List<Persona> lista = new ArrayList<>();
 		List<Rol> listaRol = new ArrayList<>();
@@ -127,6 +137,13 @@ public class IPersonaServiceImpl implements IPersonaService{
 					response.setMetadata("Respuesta NOK", "-1", "comuna no encontrada");
 					return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.NOT_FOUND);
 				}
+				Optional<EstadoCivil> estado = estadoDao.findById(estadoCivilId);
+				if(estado.isPresent()) {
+					persona.setEstadoCivil(estado.get());
+				}else {
+					response.setMetadata("Respuesta NOK", "-1", "estadoCivil no encontrada");
+					return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.NOT_FOUND);
+				}
 				Persona personaGuardada = personaDao.save(persona);
 				if(personaGuardada != null) {
 						
@@ -153,15 +170,49 @@ public class IPersonaServiceImpl implements IPersonaService{
 	
 	@Override
 	@Transactional
-	public ResponseEntity<PersonaResponseRest> actualizarPersona(Persona persona, Long rolId, Long id) {
+	public ResponseEntity<PersonaResponseRest> actualizarPersona(Persona persona,Long id, Long paisId, Long regionId, Long comunaId,Long rolId, Long estadoCivilId) {
 		PersonaResponseRest response = new PersonaResponseRest();
 		List<Persona> lista = new ArrayList<>();
 		List<Rol> listaRol = new ArrayList<>();
+		Pais paises = new Pais();
+		Region regiones = new Region();
+		Comuna comunas = new Comuna();
+		EstadoCivil estados = new EstadoCivil();
 			
 			try {
 				//Buscar el rol y actualizar en el objeto persona
 				
 					Optional<Rol> rol = rolDao.findById(rolId);
+					Optional<Pais> pais = paisDao.findById(paisId);
+					Optional<Region> region = regionDao.findById(regionId);
+					Optional<Comuna> comuna = comunaDao.findById(comunaId);
+					Optional<EstadoCivil> estadoCivil = estadoDao.findById(estadoCivilId);
+
+					
+					if(comuna.isPresent()) {
+						comunas = comuna.get();
+						persona.setComuna(comunas);
+					}
+					
+					
+					if(region.isPresent()) {
+						regiones = region.get();
+						persona.setRegion(regiones);
+					}
+					if(estadoCivil.isPresent()) {
+						estados = estadoCivil.get();
+						persona.setEstadoCivil(estados);
+					}
+					
+					
+					
+					if(pais.isPresent()) {
+						paises = pais.get();
+						persona.setPais(paises);
+					}else {
+						response.setMetadata("Respuesta NOK", "-1", "Pais no encontrado");
+						return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.NOT_FOUND);
+					}
 					
 					if(rol.isPresent()) {
 						listaRol.add(rol.get());
@@ -188,7 +239,7 @@ public class IPersonaServiceImpl implements IPersonaService{
 					personaBuscada.get().setSupervisorId(persona.getSupervisorId());
 					personaBuscada.get().setNombreSupervisor(persona.getNombreSupervisor());
 					personaBuscada.get().setApellidoPaternoSupervisor(persona.getApellidoPaternoSupervisor());
-					personaBuscada.get().setApellidoMaternoSupervisor(persona.getApellidoMaternoSupervisor());
+					//personaBuscada.get().setApellidoMaternoSupervisor(persona.getApellidoMaternoSupervisor());
 					personaBuscada.get().setGenero(persona.getGenero());
 					personaBuscada.get().setEstadoCivil(persona.getEstadoCivil());
 					personaBuscada.get().setRedSocial(persona.getRedSocial());
@@ -233,7 +284,7 @@ public class IPersonaServiceImpl implements IPersonaService{
 				Optional<Persona> persona = personaDao.findById(id);
 				if(persona.isPresent()) {
 					
-						personaDao.deleteById(id);
+						personaDao.eliminarPersonaYRoles(id);
 					
 					response.setMetadata("Respuesta OK", "00", "Persona Eliminada");
 					
@@ -243,9 +294,9 @@ public class IPersonaServiceImpl implements IPersonaService{
 				}
 				
 			} catch (Exception e) {
-				response.setMetadata("Respuesta NOK", "-1", "Error al borrar la persona");
-				return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-
+			    e.printStackTrace(); // Agregar esta línea para imprimir la excepción
+			    response.setMetadata("Respuesta NOK", "-1", "Error al borrar la persona");
+			    return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 			return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.OK);
 	}
@@ -367,5 +418,10 @@ PersonaResponseRest response = new PersonaResponseRest();
 		}
 		return new ResponseEntity<PersonaResponseRest>(response, HttpStatus.OK);
 	}
+	
 
 }
+
+	
+
+

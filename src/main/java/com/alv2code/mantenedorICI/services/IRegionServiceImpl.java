@@ -68,7 +68,6 @@ public class IRegionServiceImpl implements IRegionService {
 	}
 
 	@Override
-	@Transactional
 	public ResponseEntity<RegionResponseRest> guardar(Region region) {
 		RegionResponseRest response = new RegionResponseRest();
 		List<Region> lista = new ArrayList<>();

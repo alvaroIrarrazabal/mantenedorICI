@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -25,10 +26,15 @@ public class Comuna implements Serializable {
 	private static final long serialVersionUID = 5144135265089332349L;
 	
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String nombre;
+	  @Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    private Long id;
+	    private String nombre;
+
+	    @JsonIgnore
+	    @ManyToOne(fetch = FetchType.EAGER)
+	    @JoinColumn(name = "region_id")
+	    private Region region;
 	
 	
 	
@@ -75,13 +81,5 @@ public class Comuna implements Serializable {
 
 
 
-
-
-
-
-
-	 @ManyToOne(fetch = FetchType.EAGER)
-	    private Region region;
-	
 
 }

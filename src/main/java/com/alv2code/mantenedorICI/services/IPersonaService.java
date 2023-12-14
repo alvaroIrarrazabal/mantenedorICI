@@ -10,8 +10,8 @@ public interface IPersonaService {
 	
 	public ResponseEntity<PersonaResponseRest> buscarPersonas();
 	public ResponseEntity<PersonaResponseRest> buscarPersonaPorId(Long id);
-	public ResponseEntity<PersonaResponseRest> guardarPersona(Persona persona,Long paisId, Long regionId, Long comunaId,Long rolId);
-	public ResponseEntity<PersonaResponseRest> actualizarPersona(Persona persona,Long rolId , Long id);
+	public ResponseEntity<PersonaResponseRest> guardarPersona(Persona persona,Long paisId, Long regionId, Long comunaId,Long rolId, Long estadoId);
+	public ResponseEntity<PersonaResponseRest> actualizarPersona(Persona persona,Long id,Long paisId, Long regionId, Long comunaId,Long rolId,Long estadoId);
 	public ResponseEntity<PersonaResponseRest> borrarPorId(Long id);
 	public ResponseEntity<PersonaResponseRest> buscarSupervisor();
 	public ResponseEntity<PersonaResponseRest> buscarEstadoCivil();

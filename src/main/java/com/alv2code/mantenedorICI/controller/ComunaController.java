@@ -34,6 +34,15 @@ public class ComunaController {
 		return response;
 	}
 	
+
+	@GetMapping("/comunas/region/{id}")
+	public ResponseEntity<ComunaResponseRest> buscarRegionPorPais(@PathVariable long id){
+		ResponseEntity<ComunaResponseRest> response = service.buscarComunaPorRegion(id);
+		return response;
+	}
+	
+	
+	
 	@GetMapping("/comunas/{id}")
 	public ResponseEntity<ComunaResponseRest> buscarComunasPorId(@PathVariable long id){
 		
@@ -50,7 +59,7 @@ public class ComunaController {
 	}
 	
 	@PutMapping("/comunas/{id}")
-	public ResponseEntity<ComunaResponseRest> actualizarComunas(@RequestBody Comuna comuna, @PathVariable Long id){
+	public ResponseEntity<ComunaResponseRest> actualizarComunas(@RequestBody Comuna comuna, @PathVariable long id){
 		
 		ResponseEntity<ComunaResponseRest> response = service.actualizar(comuna, id);
 		return response;
@@ -58,17 +67,12 @@ public class ComunaController {
 	
 
 	@DeleteMapping("/comunas/{id}")
-	public ResponseEntity<ComunaResponseRest> borrarComunas( @PathVariable Long id){
+	public ResponseEntity<ComunaResponseRest> borrarComunas( @PathVariable long id){
 		
 		ResponseEntity<ComunaResponseRest> response = service.borrar(id);
 		return response;
 	}
 	
 	
-	@GetMapping("/comunas/region/{id}")
-	public ResponseEntity<ComunaResponseRest> buscarRegionPorPais(@PathVariable Long id){
-		ResponseEntity<ComunaResponseRest> response = service.buscarPorRegion(id);
-		return response;
-	}
 	
 }
